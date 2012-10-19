@@ -6,3 +6,4 @@
 *.out
 ## sass-cache
 .sass-cache/
+_downloads/

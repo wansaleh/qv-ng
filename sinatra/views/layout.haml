@@ -1,0 +1,29 @@
+!!!
+%html(lang="en" ng-app)
+  %head
+    %meta(charset="utf-8")
+    %meta(http-equiv="X-UA-Compatible" content="IE=edge,chrome=1")
+    %meta(name="viewport" content="width=device-width,initial-scale=1")
+    %title QuranVue AngularJS
+    / Application styles.
+    %link(rel="stylesheet" href="/assets/css/app.css")
+
+  %body
+
+    = yield
+
+
+  / Libraries.
+  %script(src="/assets/js/libs/jquery.js")
+  %script(src="/assets/js/libs/lodash.js")
+  %script(src="/assets/js/libs/underscore.string.js")
+  %script(src="/assets/js/libs/backbone.js")
+  %script(src="/assets/angular/angular.js")
+
+  / Application specific.
+  %script(src="/assets/js/qurandata.js")
+  %script(src="/assets/js/utils.js")
+  %script(src="/assets/js/modules/sura.js")
+  %script(src="/assets/js/modules/aya.js")
+  %script(src="/assets/js/data.js")
+  %script(src="/assets/js/app.js")

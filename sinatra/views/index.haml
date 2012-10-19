@@ -1,0 +1,13 @@
+/ Main container.
+#main(role="main")
+  .container
+    .row
+      .span12
+        %h1
+          QuranVuew
+          %small Bismillahirrahmanirrahim
+        %div.sura-list(ng-controller="SurasController")
+          %button.btn.btn-primary(ng-click="sort()") Sort!
+          %ul
+            %li(ng-repeat="sura in suras")
+              {{sura.tname}}

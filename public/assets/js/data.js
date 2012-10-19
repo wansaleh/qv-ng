@@ -6,8 +6,8 @@
   }
 
   (function(app, _, Backbone) {
-    var Data, data, i, infoName, infoVal, j, key, mapping, val, _i, _j, _len, _len1, _ref1, _ref2;
-    Data = app.Data = {};
+    var data, i, infoName, infoVal, j, key, mapping, model, val, _i, _j, _len, _len1, _ref1, _ref2;
+    this.Data = {};
     mapping = {
       Sura: {
         name: 'Suras',
@@ -40,9 +40,15 @@
     };
     for (infoName in mapping) {
       infoVal = mapping[infoName];
-      Data[infoVal.name] = [];
+      if (infoVal.name === 'Suras') {
+        this.Data[infoVal.name] = new Sura.Collection;
+        model = Sura.Model;
+      } else {
+        this.Data[infoVal.name] = new Backbone.Collection;
+        model = Backbone.Model;
+      }
       i = 0;
-      _ref1 = QuranData[infoName];
+      _ref1 = this.QuranData[infoName];
       for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
         val = _ref1[_i];
         data = {};
@@ -52,15 +58,15 @@
           key = _ref2[j];
           data[key] = val[j];
         }
-        Data[infoVal.name].push(data);
+        this.Data[infoVal.name].add(new model(data));
         i++;
       }
     }
-    return Data.Markings = {
+    return this.Data.Markings = {
       Pause: ["\u06D6", "\u06D7", "\u06D8", "\u06D9", "\u06DA", "\u06DB"],
       Vowel: ["\u064B", "\u064C", "\u064D", "\u064E", "\u064F", "\u0650", "\u0651", "\u0652", "\u0653", "\u0654", "\u0655", "\u0656", "\u0657", "\u0658", "\u0659", "\u065A", "\u065B", "\u065C", "\u065D", "\u065E"],
       Sajda: "\u06E9"
     };
-  })(this.app, this._, this.Backbone);
+  }).call(this, this.app, this._, this.Backbone);
 
 }).call(this);

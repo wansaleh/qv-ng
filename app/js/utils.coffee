@@ -1,4 +1,4 @@
-((window, $, _) ->
+(($, _) ->
 
   # Arabic numbers, 1-9
   arabicNums = ["\u0660", "\u0661", "\u0662", "\u0663", "\u0664", "\u0665", "\u0666", "\u0667", "\u0668", "\u0669"]
@@ -59,7 +59,7 @@
     @
 
   # Shortcut for console.log
-  window.log = ->
+  @log = ->
     console.log.apply(console, arguments)
 
   do ->
@@ -75,4 +75,4 @@
       Array::[method] = ->
         _[method].apply(_, [this].concat(_.toArray(arguments)))
 
-) @, @$, @_
+).call @, @$, @_

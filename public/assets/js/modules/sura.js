@@ -8,8 +8,7 @@
   }
 
   (function(app, Backbone) {
-    var Sura;
-    Sura = app.Sura = {
+    this.Sura = app.Sura = {
       Views: {},
       valid: function(id) {
         return (1 <= id && id <= 114);
@@ -150,6 +149,6 @@
       return Item;
 
     })(Backbone.View);
-  })(this.app, this.Backbone);
+  }).call(this, this.app, this.Backbone);
 
 }).call(this);

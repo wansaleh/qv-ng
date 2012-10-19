@@ -1,13 +1,27 @@
 / Main container.
 #main(role="main")
-  .container
-    .row
-      .span12
-        %h1
-          QuranVuew
-          %small Bismillahirrahmanirrahim
-        %div.sura-list(ng-controller="SurasController")
-          %button.btn.btn-primary(ng-click="sort()") Sort!
-          %ul
-            %li(ng-repeat="sura in suras")
-              {{sura.tname}}
+  .index-wrapper(ng-controller="SurasController")
+    .container
+      .row
+        .span8
+          %h1
+            QuranVue
+            %small Bismillahirrahmanirrahim
+        .span4
+          .btn-group.btn-sort
+            %a.btn.btn-primary(ng-click="sort()")
+              %i.icon-sort
+              Sort!
+            %a.btn.btn-primary(ng-click="sort()")
+              Test Change Val
+
+    .container
+      .row
+        .span12
+          %nav.suras
+            %ul
+              %li(ng-repeat="sura in suras")
+                %a.btn.btn-info(href="{{sura.permalink()}}")
+                  %strong {{sura.get('id')}}
+                  {{sura.get('tname')}}
+                  {{sura.get('name')}}

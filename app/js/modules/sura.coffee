@@ -2,7 +2,7 @@
 ((app, Backbone) ->
 
   # Create a new module
-  Sura = app.Sura =
+  @Sura = app.Sura =
     Views: {}
 
     # Set some helpers
@@ -79,4 +79,4 @@
     data: ->
       @model.toJSON()
 
-) @app, @Backbone
+).call @, @app, @Backbone

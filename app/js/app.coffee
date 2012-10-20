@@ -6,33 +6,33 @@
 
   quranvue = {}
 
-  quranvue.service = angular.module('quranvue.service', [])
+  angular.module('quranvue.service', [])
+    .value('greeter',
+      salutation: 'Hello'
 
-  quranvue.service.value 'greeter',
-    salutation: 'Hello'
+      localize: (localization) ->
+        @salutation = localization.salutation
 
-    localize: (localization) ->
-      @salutation = localization.salutation
+      greet: (name) ->
+        @salutation + ' ' + name + '!'
+    )
+    .value('user',
+      load: (name) ->
+        @name = name
+    )
 
-    greet: (name) ->
-      @salutation + ' ' + name + '!'
+  angular.module('quranvue.directive', [])
 
-  quranvue.service.value 'user',
-    load: (name) ->
-      @name = name
-
-  quranvue.directive = angular.module('quranvue.directive', [])
-
-  quranvue.filter = angular.module('quranvue.filter', [])
+  angular.module('quranvue.filter', [])
 
   quranvue.base = angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter'])
 
-  # quranvue.base.run (greeter, user) ->
-  #     # This is effectively part of the main method initialization code
-  #     greeter.localize
-  #       salutation: 'Bonjour'
+  quranvue.base.run (greeter, user) ->
+      # This is effectively part of the main method initialization code
+      greeter.localize
+        salutation: 'Bonjour'
 
-  #     user.load 'World'
+      user.load 'World'
 
   # Controller
   quranvue.base.controller 'IndexCtrl', ($scope, greeter, user) ->

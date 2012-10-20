@@ -9,9 +9,7 @@
 
   (function(app, Backbone) {
     var Aya;
-    Aya = app.Aya = {
-      Views: {}
-    };
+    Aya = this.Aya = {};
     Aya.Model = (function(_super) {
 
       __extends(Model, _super);
@@ -47,7 +45,7 @@
       return Model;
 
     })(Backbone.Model);
-    Aya.Collection = (function(_super) {
+    return Aya.Collection = (function(_super) {
 
       __extends(Collection, _super);
 
@@ -66,74 +64,6 @@
       return Collection;
 
     })(Backbone.Collection);
-    Aya.Views.List = (function(_super) {
-
-      __extends(List, _super);
-
-      function List() {
-        return List.__super__.constructor.apply(this, arguments);
-      }
-
-      List.prototype.template = "aya/list";
-
-      List.prototype.className = "ayas-wrapper";
-
-      List.prototype.attributes = function() {
-        return {
-          "data-sura": this.options.info.get("id")
-        };
-      };
-
-      List.prototype.initialize = function() {
-        this.info = this.options.info;
-        this.collection = this.options.collection;
-        this.collection.on("reset", this.render, this);
-        return this.collection.on("change", this.render, this);
-      };
-
-      List.prototype.data = function() {
-        return this.info.toJSON();
-      };
-
-      List.prototype.beforeRender = function() {
-        return this.collection.each((function(aya) {
-          return this.insertView(".ayas", new Aya.Views.Item({
-            model: aya
-          }));
-        }), this);
-      };
-
-      return List;
-
-    })(Backbone.View);
-    Aya.Views.Item = (function(_super) {
-
-      __extends(Item, _super);
-
-      function Item() {
-        return Item.__super__.constructor.apply(this, arguments);
-      }
-
-      Item.prototype.template = "aya/item";
-
-      Item.prototype.tagName = "div";
-
-      Item.prototype.className = "aya-wrapper";
-
-      Item.prototype.attributes = function() {
-        return {
-          "data-aya": this.model.get("aya")
-        };
-      };
-
-      Item.prototype.data = function() {
-        return this.model.toJSON();
-      };
-
-      return Item;
-
-    })(Backbone.View);
-    return Aya;
-  })(this.app, this.Backbone);
+  }).call(this, app, Backbone);
 
 }).call(this);

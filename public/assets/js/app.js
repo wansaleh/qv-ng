@@ -5,15 +5,30 @@
     this.app = {};
   }
 
-  (function(app, $, _) {
-    return this.SurasController = function($scope) {
-      $scope.suras = Data.Suras.map(function(sura) {
-        return _.extend(sura, {
-          permalink: function() {
-            return "sura/" + this.id;
-          }
-        });
+  (function(app, $, _, Data) {
+    app.quranvue = angular.module('quranvue.service', []).value('greeter', {
+      salutation: 'Hello',
+      localize: function(localization) {
+        return this.salutation = localization.salutation;
+      },
+      greet: function(name) {
+        return this.salutation + ' ' + name + '!';
+      }
+    }).value('user', {
+      load: function(name) {
+        return this.name = name;
+      }
+    });
+    angular.module('quranvue.directive', []);
+    angular.module('quranvue.filter', []);
+    angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter']).run(function(greeter, user) {
+      greeter.localize({
+        salutation: 'Bonjour'
       });
+      return user.load('World');
+    });
+    return this.IndexController = function($scope) {
+      $scope.suras = Data.Suras.toJSON();
       $scope.sort_attr = "id";
       return $scope.sort = function() {
         if ($scope.sort_attr === "id") {
@@ -29,6 +44,6 @@
         }
       };
     };
-  }).call(this, this.app, this.$, this._);
+  }).call(this, app, $, _, Data);
 
 }).call(this);

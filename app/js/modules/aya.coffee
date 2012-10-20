@@ -2,7 +2,7 @@
 ((app, Backbone) ->
 
   # Create a new module
-  Aya = app.Aya = Views: {}
+  Aya = @Aya = {}
 
   # ========================================================
   # Model
@@ -26,43 +26,4 @@
     url: "/api/ayas"
     comparator: (aya) -> aya.get "aya"
 
-  # ========================================================
-  # Views
-  # Main View: List of ayas
-  class Aya.Views.List extends Backbone.View
-    template: "aya/list"
-    className: "ayas-wrapper"
-
-    attributes: ->
-      "data-sura": @options.info.get "id"
-
-    initialize: ->
-      @info       = @options.info
-      @collection = @options.collection
-
-      @collection.on "reset",  @render, @
-      @collection.on "change", @render, @
-
-    data: ->
-      @info.toJSON()
-
-    beforeRender: ->
-      @collection.each ((aya) ->
-        @insertView ".ayas", new Aya.Views.Item(model: aya)
-      ), @
-
-  # Sub View: Single aya
-  class Aya.Views.Item extends Backbone.View
-    template: "aya/item"
-    tagName: "div"
-    className: "aya-wrapper"
-
-    attributes: ->
-      "data-aya": @model.get "aya"
-
-    data: ->
-      @model.toJSON()
-
-  Aya
-
-) @app, @Backbone
+).call @, app, Backbone

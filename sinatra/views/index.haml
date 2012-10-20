@@ -1,6 +1,6 @@
 / Main container.
 #main(role="main")
-  .index-wrapper(ng-controller="SurasController")
+  .index-wrapper(ng-controller="IndexController")
     .container
       .row
         .span8
@@ -9,11 +9,10 @@
             %small Bismillahirrahmanirrahim
         .span4
           .btn-group.btn-sort
-            %a.btn.btn-primary(ng-click="sort()")
-              %i.icon-sort
-              Sort!
-            %a.btn.btn-primary(ng-click="sort()")
-              Test Change Val
+            %a.btn.btn-primary.btn-small(ng-click="sort()" ng-class="{active: sort_attr == 'id'}")
+              Sort by <b>order</b>
+            %a.btn.btn-primary.btn-small(ng-click="sort()" ng-class="{active: sort_attr == 'tname'}")
+              Sort by <b>name</b>
 
     .container
       .row
@@ -21,7 +20,7 @@
           %nav.suras
             %ul
               %li(ng-repeat="sura in suras")
-                %a.btn.btn-info(href="{{sura.permalink()}}")
-                  %strong {{sura.get('id')}}
-                  {{sura.get('tname')}}
-                  {{sura.get('name')}}
+                %a.btn.btn-info(href="{{sura.permalink}}")
+                  %strong {{sura.id}}
+                  {{sura.tname}}
+                  {{sura.name}}

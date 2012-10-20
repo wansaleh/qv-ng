@@ -1,37 +1,43 @@
 @app ?= {}
-((app, $, _, Data) ->
+((app, angular, $, _, Data) ->
 
   # angular.module 'quranvue', [], ($routeProvider, $locationProvider) ->
   #   $routeProvider.when '/sura/:suraId',
 
-  app.quranvue = angular.module('quranvue.service', []).
-    value('greeter', {
-      salutation: 'Hello'
-      localize: (localization) ->
-        @salutation = localization.salutation
+  quranvue = {}
 
-      greet: (name) ->
-        @salutation + ' ' + name + '!'
-    }).
-    value('user', {
-      load: (name) ->
-        @name = name
-    })
+  quranvue.service = angular.module('quranvue.service', [])
 
-  angular.module('quranvue.directive', [])
+  quranvue.service.value 'greeter',
+    salutation: 'Hello'
 
-  angular.module('quranvue.filter', [])
+    localize: (localization) ->
+      @salutation = localization.salutation
 
-  angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter']).
-    run (greeter, user) ->
-      # This is effectively part of the main method initialization code
-      greeter.localize
-        salutation: 'Bonjour'
+    greet: (name) ->
+      @salutation + ' ' + name + '!'
 
-      user.load 'World'
+  quranvue.service.value 'user',
+    load: (name) ->
+      @name = name
+
+  quranvue.directive = angular.module('quranvue.directive', [])
+
+  quranvue.filter = angular.module('quranvue.filter', [])
+
+  quranvue.base = angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter'])
+
+  # quranvue.base.run (greeter, user) ->
+  #     # This is effectively part of the main method initialization code
+  #     greeter.localize
+  #       salutation: 'Bonjour'
+
+  #     user.load 'World'
 
   # Controller
-  @IndexController = ($scope) ->
+  quranvue.base.controller 'IndexCtrl', ($scope, greeter, user) ->
+    $scope.greeting = greeter.greet(user.name);
+
     $scope.suras = Data.Suras.toJSON()
     $scope.sort_attr = "id"
 
@@ -43,4 +49,4 @@
         $scope.suras = _.sortBy $scope.suras, (sura) -> sura.id
         $scope.sort_attr = "id"
 
-).call @, app, $, _, Data
+).call @, app, angular, $, _, Data

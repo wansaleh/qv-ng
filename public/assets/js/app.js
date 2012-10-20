@@ -5,8 +5,11 @@
     this.app = {};
   }
 
-  (function(app, $, _, Data) {
-    app.quranvue = angular.module('quranvue.service', []).value('greeter', {
+  (function(app, angular, $, _, Data) {
+    var quranvue;
+    quranvue = {};
+    quranvue.service = angular.module('quranvue.service', []);
+    quranvue.service.value('greeter', {
       salutation: 'Hello',
       localize: function(localization) {
         return this.salutation = localization.salutation;
@@ -14,20 +17,17 @@
       greet: function(name) {
         return this.salutation + ' ' + name + '!';
       }
-    }).value('user', {
+    });
+    quranvue.service.value('user', {
       load: function(name) {
         return this.name = name;
       }
     });
-    angular.module('quranvue.directive', []);
-    angular.module('quranvue.filter', []);
-    angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter']).run(function(greeter, user) {
-      greeter.localize({
-        salutation: 'Bonjour'
-      });
-      return user.load('World');
-    });
-    return this.IndexController = function($scope) {
+    quranvue.directive = angular.module('quranvue.directive', []);
+    quranvue.filter = angular.module('quranvue.filter', []);
+    quranvue.base = angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter']);
+    return quranvue.base.controller('IndexCtrl', function($scope, greeter, user) {
+      $scope.greeting = greeter.greet(user.name);
       $scope.suras = Data.Suras.toJSON();
       $scope.sort_attr = "id";
       return $scope.sort = function() {
@@ -43,7 +43,7 @@
           return $scope.sort_attr = "id";
         }
       };
-    };
-  }).call(this, app, $, _, Data);
+    });
+  }).call(this, app, angular, $, _, Data);
 
 }).call(this);

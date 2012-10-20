@@ -1,12 +1,13 @@
 / Main container.
 #main(role="main")
-  .index-wrapper(ng-controller="IndexController")
+  .index-wrapper(ng-controller="IndexCtrl")
     .container
       .row
         .span8
           %h1
             QuranVue
             %small Bismillahirrahmanirrahim
+            %small {{greeting}}
         .span4
           .btn-group.btn-sort
             %a.btn.btn-primary.btn-small(ng-click="sort()" ng-class="{active: sort_attr == 'id'}")

@@ -25,28 +25,27 @@
 
   angular.module('quranvue.filter', [])
 
-  quranvue.base = angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter'])
-
-  quranvue.base.run (greeter, user) ->
+  angular.module('quranvue', ['quranvue.service', 'quranvue.directive', 'quranvue.filter'])
+    .run((greeter, user) ->
       # This is effectively part of the main method initialization code
       greeter.localize
         salutation: 'Bonjour'
 
       user.load 'World'
+    )
+    # Controller
+    .controller('IndexCtrl', ($scope, greeter, user) ->
+      $scope.greeting = greeter.greet(user.name);
 
-  # Controller
-  quranvue.base.controller 'IndexCtrl', ($scope, greeter, user) ->
-    $scope.greeting = greeter.greet(user.name);
+      $scope.suras = Data.Suras.toJSON()
+      $scope.sort_attr = "id"
 
-    $scope.suras = Data.Suras.toJSON()
-    $scope.sort_attr = "id"
-
-    $scope.sort = ->
-      if $scope.sort_attr == "id"
-        $scope.suras = _.sortBy $scope.suras, (sura) -> sura.tname
-        $scope.sort_attr = "tname"
-      else
-        $scope.suras = _.sortBy $scope.suras, (sura) -> sura.id
-        $scope.sort_attr = "id"
-
+      $scope.sort = ->
+        if $scope.sort_attr == "id"
+          $scope.suras = _.sortBy $scope.suras, (sura) -> sura.tname
+          $scope.sort_attr = "tname"
+        else
+          $scope.suras = _.sortBy $scope.suras, (sura) -> sura.id
+          $scope.sort_attr = "id"
+    )
 ).call @, app, angular, $, _, Data
